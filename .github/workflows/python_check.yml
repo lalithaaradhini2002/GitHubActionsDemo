@@ -1,4 +1,4 @@
-name: Python Code Checks
+name: Python Code Linting
 
 on: [push, pull_request]
 
@@ -6,7 +6,7 @@ jobs:
   lint:
     name: Lint Python Code
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -23,15 +23,4 @@ jobs:
 
     - name: Run Flake8
       run: |
-        flake8 --exclude=__init__.py
-
-    - name: Check for Changes
-      run: git diff --exit-code
-
-    - name: Set Exit Code
-      id: check-exit-code
-      run: echo ::set-output name=exit_code::${{ steps.RunTests.outcome }}
-
-    - name: Fail Workflow on Errors
-      if: ${{ steps.check-exit-code.outputs.exit_code != 'success' }}
-      run: exit 1
+        flake8
